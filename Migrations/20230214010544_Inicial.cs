@@ -14,14 +14,14 @@ namespace parcial.Migrations
                 name: "Libros",
                 columns: table => new
                 {
-                    LibrtoId = table.Column<int>(type: "INTEGER", maxLength: 5, nullable: false)
+                    LibroId = table.Column<int>(type: "INTEGER", maxLength: 5, nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Titulo = table.Column<string>(type: "TEXT", maxLength: 15, nullable: false),
                     Precio = table.Column<double>(type: "REAL", maxLength: 15, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Libros", x => x.LibrtoId);
+                    table.PrimaryKey("PK_Libros", x => x.LibroId);
                 });
         }
 

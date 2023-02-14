@@ -17,7 +17,7 @@ namespace parcial.Migrations
 
             modelBuilder.Entity("Libros", b =>
                 {
-                    b.Property<int>("LibrtoId")
+                    b.Property<int>("LibroId")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(5)
                         .HasColumnType("INTEGER");
@@ -31,7 +31,7 @@ namespace parcial.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("TEXT");
 
-                    b.HasKey("LibrtoId");
+                    b.HasKey("LibroId");
 
                     b.ToTable("Libros");
                 });
