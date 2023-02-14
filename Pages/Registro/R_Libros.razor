@@ -1,83 +1,121 @@
-@page "/Libros" 
+@page "/libros"
+@page "/libros/{LibroId:int}"
+@inject LibrosBLL librosBLL
+<EditForm Model=libro OnValidSubmit="@Guardar">
+    <DataAnnotationsValidator />
+    <html>
 
-<html>
+    <head>
+        <style>
+            .frame {
+                width: 50%;
+                display: flex;
+                flex-direction: column;
+                border: 2px solid rgb(164, 151, 151);
+                margin: 20px;
+            }
 
-<head>
-    <style>
-        .frame {
-            width: 50%;
-            display: flex;
-            flex-direction: column;
-            border: 2px solid rgb(164, 151, 151);
-            margin: 20px;
-        }
+            .body {
+                flex-grow: 1;
+                padding: 20px;
+                text-align: center;
+            }
 
-      
+            .footer {
+                background-color: #f1f1f1;
+                padding: 20px;
+                text-align: center;
+                border: 2px solid #ccc;
+            }
+        </style>
 
-        .body {
-            flex-grow: 1;
-            padding: 20px;
-            text-align: center;
-        }
+    </head>
 
-        .footer {
-            background-color: #f1f1f1;
-            padding: 20px;
-            text-align: center;
-            border: 2px solid #ccc;
-        }
-    </style>
+    <div class="frame">
 
-</head>
-
-<div class="frame">
-
-    <div class="header">
-        <h2>Registro de Libros</h2>
-    </div>
+        <div class="header">
+            <h2> --------------Registro de Libros -----------</h2>
+        </div>
 
 
-    <div class="body">
+        <div class="body">
 
-        <form>
+            <form>
 
-            <label for="LibroId">Libro ID</label><br>
-            <input type="num" id="OcupacionId"  
+                <label for="LibroId">Libro ID</label><br>
+                <input type="num" id="LibroId" name="LibroId" @bind-value="libro.LibroId">
+                <button name="btnSearch" @onclick="Buscar" id="btnSearch" class="btn btn-secondary">
+                    <span class="fas fa-search"></span> Buscar
+                </button>
 
-            <button name="btnSearch"  id="btnSearch" class="btn btn-secondary">
-                <span class="fas fa-search"></span> Buscar
+
+                <br>
+
+                <label for="T">Titulo</label><br>
+                <input type="text" id="Titulo" name="Titulo" @bind-value="libro.Titulo"> <br>
+
+                <ValidationMessage For="@(() => libro.Titulo)" />
+
+                <label for="precio">Precio </label><br>
+                <input type="number" id="Precio" name="Precio" @bind-value="libro.Precio">
+                <ValidationMessage For="@(() => libro.Precio)" />
+                <br>
+
+
+            </form>
+        </div>
+
+        <div class="footer">
+            <button name="btnNuevo" @onclick="Nuevo" id="btnNuevo" class="btn btn-primary">
+                <span class="oi pi-plus"></span> Nuevo
             </button>
 
+            <button name="btnguardar" type="submit"  id="btnguardar" class="btn btn-success">
+                <span class="oi pi-Download"></span> Guardar
+            </button>
+            <button name="btnCancel" @onclick="Eliminar" id="btnCancel" class="btn btn-danger">
+                <span class="oi pi-close"></span> Eliminar
 
-            <br>
-
-            <label for="T">Titulo</label><br>
-            <input type="text" id="Titulo" <br>
-
-            
-
-            <label for="precio">Precio</label><br>
-            <input type="text" id="Precio"  >
-
-            <br>
-
-
-        </form>
+            </button>
+        </div>
     </div>
 
-    <div class="footer">
-        <button name="btnNuevo" id="btnNuevo" class="btn btn-primary">
-            <span class="oi pi-plus"></span> Nuevo
-        </button>
+    </html>
+</EditForm>
+@code {
 
-        <button name="btnguardar"  id="btnguardar" class="btn btn-success">
-            <span class="oi pi-Download"></span> Guardar
-        </button>
-        <button name="btnCancel"  id="btnCancel" class="btn btn-danger">
-            <span class="oi pi-close"></span> Eliminar
+    [Parameter]
+    public int LibroId { get; set; }
+    public Libros libro { get; set; } = new Libros();
 
-        </button>
-    </div>
-</div>
+    protected override void OnInitialized()
+    {
+        if (LibroId > 0)
+        {
+            this.libro.LibroId = LibroId;
+            this.Buscar();
+        }
+    }
+    void Buscar()
+    {
+        var LibroEncontrado = librosBLL.Buscar(libro.LibroId);
+        if (LibroEncontrado != null)
+            this.libro = LibroEncontrado;
+    }
 
-</html>
+    void Nuevo()
+    {
+        this.libro = new Libros();
+    }
+    void Eliminar()
+    {
+        if (librosBLL.Eliminar(this.libro))
+            Nuevo();
+    }
+    void Guardar()
+    {
+        if (librosBLL.Guardar(this.libro))
+            Nuevo();
+    }
+
+}

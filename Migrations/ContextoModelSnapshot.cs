@@ -19,11 +19,9 @@ namespace parcial.Migrations
                 {
                     b.Property<int>("LibroId")
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(5)
                         .HasColumnType("INTEGER");
 
                     b.Property<double>("Precio")
-                        .HasMaxLength(15)
                         .HasColumnType("REAL");
 
                     b.Property<string>("Titulo")

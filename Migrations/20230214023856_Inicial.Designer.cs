@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace parcial.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20230214010544_Inicial")]
+    [Migration("20230214023856_Inicial")]
     partial class Inicial
     {
         /// <inheritdoc />
@@ -22,11 +22,9 @@ namespace parcial.Migrations
                 {
                     b.Property<int>("LibroId")
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(5)
                         .HasColumnType("INTEGER");
 
                     b.Property<double>("Precio")
-                        .HasMaxLength(15)
                         .HasColumnType("REAL");
 
                     b.Property<string>("Titulo")

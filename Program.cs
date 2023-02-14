@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 var ConStr = builder.Configuration.GetConnectionString("ConStr");
 builder.Services.AddDbContext<Contexto>(options =>
 options.UseSqlite(ConStr));
-
+builder.Services.AddScoped<LibrosBLL>();
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
