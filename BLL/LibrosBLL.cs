@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 
 public class LibrosBLL
@@ -48,6 +49,10 @@ public class LibrosBLL
             return this.Modificar(libro);
     }
 
+public List<Libros> GetList(Expression<Func<Libros,bool>> criterio){
+
+           return _contexto.Libros.AsNoTracking().Where(criterio).ToList();
+    }
 
 
 }
