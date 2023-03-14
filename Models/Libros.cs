@@ -11,6 +11,7 @@ public class Libros
     [MaxLength(15, ErrorMessage = "El titulo no debe pasar de {2} caracter")]
     public string? Titulo { get; set; }
     [Required(ErrorMessage = "Campo obligatorio")]
+    public DateTime Fecha { get; set; }
 
     public double Precio { get; set; }
 }

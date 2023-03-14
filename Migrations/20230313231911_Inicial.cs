@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -17,6 +18,7 @@ namespace parcial.Migrations
                     LibroId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Titulo = table.Column<string>(type: "TEXT", maxLength: 15, nullable: false),
+                    Fecha = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Precio = table.Column<double>(type: "REAL", nullable: false)
                 },
                 constraints: table =>

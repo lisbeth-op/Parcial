@@ -3,29 +3,41 @@
 @inject LibrosBLL LibrosBLL
 
         <h1> Consulta de Libros</h1>
-        <table class="table">
-            <thead>
-                 <tr>
-                       <th>Libro Id</th>
-                       <th>Titulo</th>
-                       <th>Precio</th>
-                       <th></th>
+            <form method="get">
+        <div class="form-group">
+            <label for="fecha">Fecha:</label>
+            <input type="date" id="fecha" name="fecha" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
 
-                 </tr>
-            </thead>
-             <tbody>
+       <table class="table table-striped table-hover mt-4">
+
+    <thead class="thead">
+        <tr class="table">
+            <th>Libro ID</th>
+            <th>Titulo</th>
+            <th>Precio</th>
+            <th>Fecha</th>
+            
+
+        </tr>
+    </thead>
+      
+<tbody>
+
                   @foreach (var libro in LibrosBLL.GetList(o=> true))
                  { 
                      <tr>
                           <td>@libro.LibroId</td> 
                           <td>@libro.Titulo</td>
                           <td>@libro.Precio</td>
+                          <td>@libro.Fecha</td>
                          
                      </tr>
                  }
-             </tbody>
-        </table>
-
+</tbody>      
+ </table>
    
 
  

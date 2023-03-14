@@ -1,86 +1,57 @@
 @page "/libros"
 @page "/libros/{LibroId:int}"
 @inject LibrosBLL librosBLL
+@inject NotificationService notificationService
 <EditForm Model=libro OnValidSubmit="@Guardar">
     <DataAnnotationsValidator />
-    <html>
 
-    <head>
-        <style>
-            .frame {
-                width: 50%;
-                display: flex;
-                flex-direction: column;
-                border: 2px solid rgb(164, 151, 151);
-                margin: 20px;
-            }
 
-            .body {
-                flex-grow: 1;
-                padding: 20px;
-                text-align: center;
-            }
-
-            .footer {
-                background-color: #f1f1f1;
-                padding: 20px;
-                text-align: center;
-                border: 2px solid #ccc;
-            }
-        </style>
-
-    </head>
-
-    <div class="frame">
-
-        <div class="header">
-            <h2> --------------Registro de Libros -----------</h2>
+    <div class="card text-primary">
+        <div class="card-header text-center">
+            <h1>Registro de libros</h1>
         </div>
+        <div class="col-3">
+
+                <label for="txtId" class="form-label">Libro ID:</label>
+                <input type="number" id="txtId" class="form-control" @bind-value="libro.LibroId">
 
 
-        <div class="body">
-
-            <form>
-
-                <label for="LibroId">Libro ID</label><br>
-                <input type="num" id="LibroId" name="LibroId" @bind-value="libro.LibroId">
-                <button name="btnSearch" @onclick="Buscar" id="btnSearch" class="btn btn-secondary">
-                    <span class="fas fa-search"></span> Buscar
+                <button name="btnBuscar" id="btnBuscar" class="btn btn-primary" @onclick="Buscar">
+                    <span class="oi oi-magnifying-glass"></span> Buscar
                 </button>
 
+                <label for="txt" class="form-label">Titulo:</label>
+                <input type="text" id="txtId" class="form-control" @bind-value="libro.Titulo">
+                  <ValidationMessage For="@(() => libro.Titulo)" />
+                
 
-                <br>
+                <label for="txt" class="form-label">Precio:</label>
+                <input type="number" id="txtId" class="form-control" @bind-value="libro.Precio">
+                 <ValidationMessage For="@(() => libro.Precio)" />
 
-                <label for="T">Titulo</label><br>
-                <input type="text" id="Titulo" name="Titulo" @bind-value="libro.Titulo"> <br>
-
-                <ValidationMessage For="@(() => libro.Titulo)" />
-
-                <label for="precio">Precio </label><br>
-                <input type="number" id="Precio" name="Precio" @bind-value="libro.Precio">
-                <ValidationMessage For="@(() => libro.Precio)" />
-                <br>
+                <label for="txtFecha" class="form-label">Fecha:</label>
+                    <input type="date" id="txtFecha" class="form-control" @bind-value="libro.Fecha">
 
 
-            </form>
-        </div>
-
-        <div class="footer">
-            <button name="btnNuevo" @onclick="Nuevo" id="btnNuevo" class="btn btn-primary">
-                <span class="oi pi-plus"></span> Nuevo
-            </button>
-
-            <button name="btnguardar" type="submit"  id="btnguardar" class="btn btn-success" onclick="alert('Registro guardado')">
-                <span class="oi pi-Download"></span> Guardar
-            </button>
-            <button name="btnCancel" @onclick="Eliminar" id="btnCancel" class="btn btn-danger">
-                <span class="oi pi-close"></span> Eliminar
-
-            </button>
-        </div>
+            </div>
     </div>
 
-    </html>
+       <div class=" card-footer text-center">
+
+                <button name="btNuevo" id="btNuevo" class="btn btn-primary mr-2" @onclick="Nuevo">
+                   Nuevo
+                </button>
+
+                <button name="btnGuardar" id="btnGuardar" class="btn btn-success mr-2" type="submit">
+                     Guardar
+                </button>
+
+                <button name="btnEliminar" id="btnEliminar" class="btn btn-danger" @onclick="Eliminar">
+                    Eliminar
+                </button>
+                </div>
+    
+    
 </EditForm>
 @code {
 
@@ -111,11 +82,28 @@
     {
         if (librosBLL.Eliminar(this.libro))
             Nuevo();
+             ShowNotification(
+                    new NotificationMessage
+                    {
+                        Severity = NotificationSeverity.Info,
+                        Summary = "Eliminado correctamente"
+                    });
+          
     }
     void Guardar()
     {
         if (librosBLL.Guardar(this.libro))
             Nuevo();
+             ShowNotification(
+                    new NotificationMessage
+                    {
+                        Severity = NotificationSeverity.Info,
+                        Summary = "Guardado correctamente"
+                    });
     }
+     void ShowNotification(NotificationMessage message)
+  {
+     notificationService.Notify(message);
+  }
 
 }
